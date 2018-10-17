@@ -25,7 +25,7 @@ public class AutoSaveOnPlay {
 					UnityEditor.SceneManagement.EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
 				}
 				Debug.Log("Auto-Saving assets before entering Play mode" );
-				EditorApplication.SaveAssets();
+				AssetDatabase.SaveAssets();
 			}
 		};
 	}
