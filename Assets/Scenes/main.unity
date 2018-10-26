@@ -227,6 +227,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  max_speed: 12
+  jump_height: 200
+  grounded_epsilon: 0.5
+  user_layer_platform: 8
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,10 +6,16 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody m_rb;
     public float speed = 10.0F;
     public float max_speed = 12.0F;
-	// Use this for initialization
+    public float jump_height = 500.0F;
+    private Collider m_collider;
+    private float collider_radius = 0.0F;
+    public float grounded_epsilon = 0.5F;
+    public int user_layer_platform;
+    // Use this for initialization
 	void Start () {
         m_rb = GetComponent<Rigidbody>();
-
+        m_collider = GetComponent<Collider>();
+        collider_radius = m_collider.bounds.extents.y;
 	}
 	
 	// Update is called once per frame
@@ -25,7 +31,20 @@ public class PlayerController : MonoBehaviour {
             Mathf.Clamp(m_rb.velocity.x, -max_speed, max_speed),
             m_rb.velocity.y, m_rb.velocity.z
             );
+        //jumping mechanic
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
+            m_rb.AddForce(0.0F, jump_height, 0.0F);
 
         
     }
+    bool isGrounded()
+    {
+        int platform_layer = 1 << user_layer_platform;
+        return Physics.Raycast(
+            transform.position,
+            Vector3.down,
+            collider_radius + grounded_epsilon,
+            platform_layer);
+    }
 }
+
