@@ -6,11 +6,15 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody m_rb;
     public float speed = 10.0F;
     public float max_speed = 12.0F;
-    public float jump_height = 500.0F;
+    public float jump_height = 400.0F;
     private Collider m_collider;
     private float collider_radius = 0.0F;
-    public float grounded_epsilon = 0.5F;
+    public float grounded_epsilon = 0.05F;
     public int user_layer_platform;
+    private float get_axis_horizontal = 0.0F;
+    private bool get_key_down_space = false;
+    public string pickup_tag;
+
     // Use this for initialization
 	void Start () {
         m_rb = GetComponent<Rigidbody>();
@@ -20,7 +24,9 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        get_axis_horizontal = Input.GetAxis("Horizontal");
+        get_key_down_space = Input.GetKey(KeyCode.Space);
+
 	}
     private void FixedUpdate(){
         /*get user input to add a left-right force to our player object*/
@@ -45,6 +51,11 @@ public class PlayerController : MonoBehaviour {
             Vector3.down,
             collider_radius + grounded_epsilon,
             platform_layer);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag(pickup_tag))
+            other.gameObject.SetActive(false);
     }
 }
 
